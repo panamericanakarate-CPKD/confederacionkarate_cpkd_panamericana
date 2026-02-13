@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPKD - PORTAL OFICIAL PANAMERICANO 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root { --oro: #d4af37; --negro: #0a0a0a; --gris: #1a1a1a; --blanco: #ffffff; }
+        body { background-color: var(--negro); color: var(--blanco); font-family: 'Segoe UI', sans-serif; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* PANTALLA DE ACCESO */
+        #pantalla-bienvenida { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #222, #000); display: flex; justify-content: center; align-items: center; z-index: 5000; }
+        .box-acceso { background: var(--gris); padding: 40px; border: 2px solid var(--oro); border-radius: 20px; text-align: center; max-width: 500px; box-shadow: 0 0 50px rgba(212, 175, 55, 0.4); }
+        .logo-login { width: 300px; height: auto; margin-bottom: 25px; border: 2px solid var(--oro); border-radius: 10px; }
+        .login-input { width: 100%; padding: 12px; margin: 8px 0; background: #000; border: 1px solid var(--oro); color: white; border-radius: 5px; box-sizing: border-box; }
+
+        /* INTERFAZ PRINCIPAL */
+        #interfaz-maestra { display: none; }
+        .header-main { padding: 15px 20px; border-bottom: 2px solid var(--oro); background: #000; position: sticky; top: 0; z-index: 1000; }
+        .idiomas-container { display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 10px; }
+        .lang-btn { background: transparent; color: var(--oro); border: 1px solid var(--oro); padding: 3px 8px; font-size: 0.8rem; cursor: pointer; border-radius: 4px; }
+        .nav-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .nav-btn { background: var(--oro); color: black; border: none; padding: 10px 18px; font-weight: bold; cursor: pointer; border-radius: 5px; text-transform: uppercase; transition: 0.3s; font-size: 0.85rem; }
+        .nav-btn:hover { background: white; transform: scale(1.05); }
+
+        /* SECCIÓN MAPA Y CINTURÓN */
+        .seccion-paises { padding: 40px 0; background: #000; text-align: center; border-bottom: 1px solid var(--oro); }
+        .mapa-contenedor { width: 280px; height: 280px; margin: 0 auto 20px; border: 6px solid var(--oro); border-radius: 50%; overflow: hidden; box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); }
+        .mapa-latam { width: 100%; height: 100%; object-fit: cover; }
+        
+        .cinturon-wrapper { overflow: hidden; background: #000; border-top: 1px solid rgba(212,175,55,0.3); padding: 20px 0; }
+        #cinturon { display: flex; gap: 50px; width: max-content; animation: desplazar 50s linear infinite; }
+        .bandera-item { display: flex; flex-direction: column; align-items: center; width: 100px; }
+        .bandera-item img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--oro); object-fit: cover; }
+        @keyframes desplazar { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* SECCIONES CONTENIDO */
+        .section { display: none; padding: 20px; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* CARDS Y TABLAS */
+        .directorio-galeria { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px 10px; }
+        .card { background: var(--gris); border: 1px solid var(--oro); padding: 15px; width: 220px; border-radius: 12px; text-align: center; }
+        .foto-wrapper { position: relative; width: 150px; height: 180px; margin: 0 auto 10px; }
+        .miembro-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid #333; }
+        .bandera-badge { position: absolute; bottom: -5px; right: -5px; width: 45px; border: 1px solid var(--oro); border-radius: 3px; }
+        .cargo-text { font-size: 0.75rem; color: var(--oro); font-weight: bold; display: block; margin-top: 5px; }
+
+        .calendario-tabla { width: 95%; max-width: 1100px; margin: 30px auto; border-collapse: collapse; background: #000; }
+        .calendario-tabla th { background: var(--oro); color: #000; padding: 15px; border: 1px solid #333; }
+        .calendario-tabla td { border: 1px solid var(--oro); padding: 12px; text-align: center; }
+        .base-box { background: var(--oro); color: black; padding: 5px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 0.8rem; }
+
+        .form-carnet { background: var(--gris); border: 2px solid var(--oro); padding: 25px; border-radius: 15px; max-width: 500px; margin: 20px auto; text-align: left; }
+        .form-carnet input, .form-carnet select { padding: 12px; background: #000; border: 1px solid #444; color: white; border-radius: 5px; width: 100%; margin-bottom: 10px; }
+        #resultado-qr { margin-top: 20px; background: white; padding: 20px; display: inline-block; border-radius: 10px; display: none; }
+        
+        .grid-comercial { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+        .card-comercial { background: #111; border: 1px solid var(--oro); border-radius: 15px; padding: 20px; }
+        
+        footer { background: #000; border-top: 2px solid var(--oro); padding: 50px 20px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-bienvenida">
+        <div class="box-acceso">
+            <img src="logo_cpkd.png" class="logo-login" alt="CPKD 400">
+            <h1 style="color:var(--oro); font-size: 1.4rem;">SISTEMA PANAMERICANO CPKD</h1>
+            <div id="login-form">
+                <input type="email" id="userMail" class="login-input" placeholder="Correo de Afiliado">
+                <input type="password" id="userPass" class="login-input" placeholder="Contraseña">
+                <button class="nav-btn" style="width: 100%; margin-top:10px;" onclick="validarAcceso('afiliado')">Entrar como Afiliado</button>
+            </div>
+            <p style="margin: 15px 0; color: #666;">— o —</p>
+            <button class="nav-btn" style="background:#444; color:white; width:100%;" onclick="validarAcceso('visitante')">Modo Visitante (Limitado)</button>
+        </div>
+    </div>
+
+    <div id="interfaz-maestra">
+        <header class="header-main">
+            <div class="idiomas-container">
+                <button class="lang-btn">ES</button><button class="lang-btn">PT</button><button class="lang-btn">EN</button>
+            </div>
+            <nav class="nav-container">
+                <button class="nav-btn" onclick="showTab('inicio')">Inicio</button>
+                <button class="nav-btn" onclick="showTab('directorio')">Directorio</button>
+                <button class="nav-btn" onclick="showTab('calendario')">Calendario</button>
+                <button class="nav-btn" id="btn-carnet" onclick="showTab('carnetizacion')">Carnetización QR</button>
+                <button class="nav-btn" onclick="showTab('ejes')">Ejes Comerciales</button>
+                <button class="nav-btn" onclick="showTab('afiliacion')">Afiliación</button>
+            </nav>
+        </header>
+
+        <div id="inicio" class="section" style="display: block; padding: 0;">
+            
+            <div style="background: linear-gradient(180deg, #111, #000); padding: 50px 20px; border-bottom: 2px solid var(--oro);">
+                <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 40px;">
+                    <div style="flex: 1; min-width: 280px; text-align: center;">
+                        <div style="position: relative; display: inline-block;">
+                            <img src="presidente.jpg" style="width: 280px; border: 3px solid var(--oro); border-radius: 15px; box-shadow: 0 0 30px rgba(212,175,55,0.4);">
+                            <div style="position: absolute; bottom: 06px; right: -10px; background: var(--oro); color: #000; padding: 10px; font-weight: bold; border-radius: 5px;">
+                                LUIS HUAMAN MALDONADO.<br><pe><small>Presidente CPKD</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 2; min-width: 300px; text-align: left;">
+                        <h2 style="color: var(--oro); border-left: 5px solid var(--oro); padding-left: 15px; margin-bottom: 20px;">MENSAJE DE LA PRESIDENCIA</h2>
+                        <p style="color: #fff; line-height: 1.6; margin-bottom: 15px;">
+                            <strong>🇪🇸 [ES]:</strong> "Es un honor darles la bienvenida a este Portal Maestro, una herramienta diseñada para la <b>unión fraternal</b> de nuestro continente. Hoy rompemos fronteras mediante tecnología de punta para consolidar un solo bloque panamericano. Nuestro compromiso es con la excelencia y el crecimiento de cada maestro y atleta" 
+                        </p>
+                        <p style="color: #ddd; line-height: 1.6; font-style: italic; margin-bottom: 15px;">
+                            <strong>🇧🇷 [PT]:</strong> "É uma honra dar-lhes as boas-vindas a este Portal Mestre, uma ferramenta concebida para a <b>união fraternal</b> do nosso continente. Hoje rompemos fronteiras através de tecnologia de ponta para consolidar um único bloco pan-americano. Nosso compromisso é com a excelência e o crescimento de cada mestre e atleta."
+                        </p>
+                        <p style="color: #bbb; line-height: 1.6;">
+                            <strong>🇺🇸 [EN]:</strong> "It is an honor to welcome you to this Master Portal, a tool designed for the <b>fraternal union</b> of our continent. Today we break boundaries through cutting-edge technology to consolidate a single Pan-American block. Our commitment is to excellence and the growth of every master and athlete."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seccion-paises">
+                <div class="mapa-contenedor"><img src="mapa.png" class="mapa-latam" alt="Mapa"></div>
+                <h2 style="color:var(--oro); margin-bottom: 20px;">NACIONES AFILIADAS</h2>
+                <div class="cinturon-wrapper"><div id="cinturon"></div></div>
+            </div>
+        </div>
+
+        <div id="directorio" class="section" style="text-align: center;">
+            <h2 style="color:var(--oro);">DIRECTORIO EJECUTIVO PANAMERICANO 2026</h2>
+            <div class="directorio-galeria">
+                <div class="card"><div class="foto-wrapper"><img src="presidente.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>LUIS HUAMAN MALDONADO</h3><span class="cargo-text">PRESIDENTE CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="vice1.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/ec.png" class="bandera-badge"></div><h3>GABRIEL PANCHANA</h3><span class="cargo-text">1ER VICEPRESIDENTE CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="vice2.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/mx.png" class="bandera-badge"></div><h3>JUAN HERNÁNDEZ LIZARRAGA</h3><span class="cargo-text">2DO VICEPRESIDENTE CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="secretario.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>ALAN PEREIRA DA SILVA</h3><span class="cargo-text">SECRETARIO GENERAL CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="tesorera (2).jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>MARIA GLECIENE DA SILVA BASTO</h3><span class="cargo-text">TESORERA CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="jefatura_ejecutiva.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>MARCELO LIMA</h3><span class="cargo-text">JEFE DIRECTORES EJECUTIVOS CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Peru.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>WILLY VELA GONZÁLEZ</h3><span class="cargo-text">DIR. EJECUTIVO PERÚ</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Bolivia.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/bo.png" class="bandera-badge"></div><h3>WILFREDO VARGAS VENACIO</h3><span class="cargo-text">DIR. EJECUTIVO BOLIVIA</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_chile.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/cl.png" class="bandera-badge"></div><h3>CESAR BRITO NUÑEZ</h3><span class="cargo-text">DIR. EJECUTIVO CHILE</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Brasil2.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>FERNANDO DE LIMA</h3><span class="cargo-text">DIR. EJECUTIVO BRASIL</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Perú2.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>PAULO DELGADO MESCUA</h3><span class="cargo-text">DIR. EJECUTIVO PERÚ</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="legal1.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>DRA. ANDREA CHAPARRO</h3><span class="cargo-text">ASESORÍA LEGAL</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="legal2.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>DR. CRISTHIAN CALDERÓN</h3><span class="cargo-text">ASESORÍA LEGAL</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="Jefe comite arbitral.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>ARLINDO VIEIRA</h3><span class="cargo-text">JEFE COMITÉ ARBITRAL</span></div>
+
+            </div>
+        </div>
+
+        <div id="calendario" class="section" style="text-align: center;">
+            <h2 style="color:var(--oro);">CALENDARIO DE CAMPEONATOS 2026</h2>
+            <table class="calendario-tabla">
+                <thead><tr><th>Mes</th><th>Evento</th><th>Sede</th><th>Bases</th></tr></thead>
+                <tbody>
+                    <tr><td>02 Mayo</td><td>I OPEN INTERNACIONAL CPKD</td><td>Escuincla-Guatemala 🇬🇹</td><td><div class="base-box">📥 Descargar</div></td></tr>
+                    <tr><td>13-14 Junio</td><td>I COPA LIBERTADORES DE AMÉRICA DE KARATE CPKD</td><td>Guayauil-Ecuador 🇪🇨</td><td><div class="base-box">📥 Descargar</div></td></tr>
+                    <tr><td>03-06 Sept.</td><td>II CAMPEONATO PANAMERICANO CPKD</td><td>Paraupeabas, Pará-Brasil 🇧🇷</td><td><div class="base-box">📥 Descargar</div></td></tr>
+                    <tr><td>16-18 Octubre</td><td>I WORLD CUP CHAMPIONSHIP CPKD</td><td>Antofagasta-Chile 🇨🇱</td><td><div class="base-box">📥 Descargar</div></td></tr>
+                    <tr><td>27-29 Nov.</td><td>INTERNACIONAL LPK-CPKD</td><td>Mazatlán-México 🇲🇽</td><td><div class="base-box">📥 Descargar</div></td></tr>
+                    <tr><td>05-06 Dic.</td><td>XXI COPA KOBUKAN CPKD</td><td>Lima-Perú 🇵🇪</td><td><div class="base-box">📥 Descargar</div></td></tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div id="carnetizacion" class="section" style="text-align: center;">
+            <h2 style="color:var(--oro);">SISTEMA DE IDENTIDAD DIGITAL QR</h2>
+            <div id="restringido-msg" style="display:none; color:red; margin-bottom:20px;">⚠️ Acceso exclusivo para Afiliados.</div>
+            <div id="form-contenedor-qr">
+                <div class="form-carnet">
+                    <label>Nombre:</label><input type="text" id="qrNombre">
+                    <label>Grado:</label><input type="text" id="qrGrado">
+                    <label>Función:</label>
+                    <select id="qrFun"><option value="ATLETA">ATLETA</option><option value="COACH">COACH</option></select>
+                    <button class="nav-btn" onclick="generarQR()" style="width: 100%;">GENERAR CARNET</button>
+                </div>
+                <div id="resultado-qr">
+                    <div id="qrcode"></div>
+                    <p id="id-det" style="color:black; font-weight:bold;"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="ejes" class="section" style="text-align: center;">
+            <h2 style="color:var(--oro);">EJES COMERCIALES</h2>
+            <div class="grid-comercial">
+                <div class="card-comercial"><h3>💎 Corporativos</h3><p>Este espacio será de gesión con las cadenas de Restaurantes, Hoteles y Pasajes aéreos como terrestres que beneficiarán a todos los afiliados a la CPKD tan sólo identificaándose con su carnet virtual en cualquier parte de latinoamérica.</p></div>
+                <div class="card-comercial"><h3>🎓 Becas</h3><p>Realizaremos los esfuerzos necesarios para conseguir becas integrales y medias becas en Convenios con Universidades, Institutos superiores técnicos, escuelas privadas aliadas a la CPKD en todo el continente.</p></div>
+                <div class="card-comercial"><h3>🩺 Salud</h3><p>Tendremos convenios médicos regionales, nacionales e internacionales para todos nuestros afiliados a la CPKD, en su ciudad, estado, región y paises donde tengamos campeonatos.</p></div>
+
+            </div>
+        </div>
+
+        <div id="afiliacion" class="section" style="text-align:center;">
+            <h2 style="color:var(--oro);">AFILIACIÓN 2026</h2>
+            <button class="nav-btn" style="padding: 20px;">⬇️ DESCARGAR FORMATOS OFICIALES</button>
+        </div>
+
+        <footer>
+            <h2 style="color:var(--oro);">CONTÁCTENOS</h2>
+            <p>📧 confederacionpanamericana2026@gmail.com</p>
+            <p>© 2026 Confederación Panamericana de Karate Do | Brasil</p>
+        </footer>
+    </div>
+
+    <script>
+        // Función Maestra de Navegación (Evita trabas)
+        function showTab(id) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            const target = document.getElementById(id);
+            if(target) target.style.display = 'block';
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function validarAcceso(tipo) {
+            if(tipo === 'afiliado') {
+                const m = document.getElementById('userMail').value;
+                const p = document.getElementById('userPass').value;
+                if(!m || !p) { alert("Ingrese credenciales"); return; }
+                document.getElementById('restringido-msg').style.display = 'none';
+            } else {
+                document.getElementById('restringido-msg').style.display = 'block';
+                document.getElementById('form-contenedor-qr').style.display = 'none';
+            }
+            document.getElementById('pantalla-bienvenida').style.display = 'none';
+            document.getElementById('interfaz-maestra').style.display = 'block';
+        }
+
+        function generarQR() {
+            const n = document.getElementById('qrNombre').value;
+            if(!n) return alert("Ingrese nombre");
+            const qrc = document.getElementById("qrcode");
+            qrc.innerHTML = "";
+            new QRCode(qrc, { text: `CPKD-2026:${n}`, width: 150, height: 150 });
+            document.getElementById("id-det").innerText = n;
+            document.getElementById("resultado-qr").style.display = "inline-block";
+        }
+
+        // Sistema de Banderas
+        const basePaises = [
+            {n:"PERÚ", f:"pe"}, {n:"BRASIL", f:"br"}, {n:"MÉXICO", f:"mx"}, {n:"CHILE", f:"cl"},
+            {n:"ECUADOR", f:"ec"}, {n:"BOLIVIA", f:"bo"}, {n:"GUATEMALA", f:"gt"}, {n:"EEUU", f:"us"},
+            {n:"CANADÁ", f:"ca"}, {n:"PANAMÁ", f:"pa"}, {n:"COLOMBIA", f:"co"}, {n:"ARGENTINA", f:"ar"}
+        ];
+
+        const con = document.getElementById('cinturon');
+        if(con){
+            [...basePaises, ...basePaises].forEach(p => {
+                const d = document.createElement('div');
+                d.className = 'bandera-item';
+                d.innerHTML = `<img src="https://flagcdn.com/w160/${p.f}.png"><span>${p.n}</span>`;
+                con.appendChild(d);
+            });
+        }
+    </script>
+</body>
+</html>
