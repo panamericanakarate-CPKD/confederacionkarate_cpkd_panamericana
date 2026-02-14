@@ -92,6 +92,9 @@
                 <button class="nav-btn" onclick="showTab('afiliacion')">Afiliación</button>
                 <button class="nav-btn" onclick="showTab('contactenos')">Contáctenos</button>
                 <button class="nav-btn" onclick="showTab('patrocinadores-area')">Ofertas y Servicios</button>
+                <button class="nav-btn" onclick="showTab('estatus-tecnico')">Validación de Grado (Cinturón)</button>
+              </div>
+            </nav>
              </div>
             </nav>
         </header>
@@ -251,9 +254,56 @@
             <button onclick="showTab('patrocinios')" style="background: var(--oro); border: none; color: #000; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;">Ver Propuesta</button>
         </div>
 
+      </div>
+      <div id="patrocinadores-area" class="section" style="display:none;">
+      </div>
+
+      <div id="estatus-tecnico" class="section" style="display:none; padding: 40px 20px; background: linear-gradient(180deg, #000 0%, #111 100%);">
+     <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="color: var(--oro); font-size: 2.2rem; margin-bottom: 10px;">VALIDACIÓN DE GRADO OFICIAL</h2>
+        <p style="color: #ccc;">Registro Maestro Continental: Escala Kyu y Grados Dan CPKD</p>
+        <div style="width: 100px; height: 3px; background: var(--oro); margin: 20px auto;"></div>
+     </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1100px; margin: 0 auto;">
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border: 1px solid #333;">
+            <h3 style="color: var(--oro); margin-bottom: 15px;">📜 Jerarquía Técnica</h3>
+            <div style="font-size: 0.9rem; color: #ddd; line-height: 1.6;">
+                <p><strong>Niveles de Formación (Kyu):</strong></p>
+                <p style="color: #aaa; font-style: italic; font-size: 0.8rem;">Del 10° Kyu al 1° Kyu (Niveles de aprendizaje según normativa nacional de cada país).</p>
+                
+                <p style="margin-top: 15px; border-top: 1px solid #444; padding-top: 10px;">
+                    <strong>Grados Superiores (Dan):</strong>
+                </p>
+                <ul style="list-style: none; padding-left: 0; color: var(--oro);">
+                    <li>• 1° Dan hasta 10° Dan</li>
+                </ul>
+                <p style="color: #aaa; font-size: 0.8rem;">Certificación con reconocimiento internacional en las 18 naciones afiliadas.</p>
+            </div>
+        </div>
+
+        <div style="background: #1a1a1a; padding: 30px; border-radius: 15px; border: 1px solid var(--oro); text-align: center;">
+            <h3 style="color: #fff;">🔍 Verificación de Estatus</h3>
+            <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 20px;">Ingrese el código de registro para validar el grado actual del atleta en la base de datos panamericana.</p>
+            <input type="text" placeholder="Código de Registro o DNI" style="width: 90%; padding: 12px; border-radius: 5px; border: 1px solid #444; background: #000; color: #fff; margin-bottom: 15px; text-align: center;">
+            <button style="width: 100%; background: var(--oro); color: #000; padding: 12px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer;">CONSULTAR REGISTRO</button>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; background: rgba(212, 175, 55, 0.05); border-radius: 10px;">
+        <p style="color: #ddd; font-size: 0.9rem;">
+            <strong>Nota para Maestros:</strong> La CPKD homologa los grados emitidos por las organizaciones nacionales, respetando sus sistemas de coloración locales y unificando el registro bajo la escala técnica internacional.
+        </p>
+        <button onclick="showTab('contactenos')" style="margin-top: 15px; background: transparent; border: 1px solid var(--oro); color: var(--oro); padding: 10px 25px; border-radius: 5px; cursor: pointer;">Solicitar Registro de Dojo</button>
     </div>
 </div>
-             </div>
+
+<footer style="background: #000; padding: 20px; text-align: center;">
+
+     </div>
+       </div>
 
     <footer style="background: #000; color: #fff; padding: 20px; text-align: center; border-top:center, border-top:2px solid var(--or);">
        <p>📧 confederacionpanamericana2026@gmail.com</p>
