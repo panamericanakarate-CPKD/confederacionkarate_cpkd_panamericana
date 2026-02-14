@@ -322,17 +322,25 @@
         }
 
         function validarAcceso(tipo) {
-            if(tipo === 'afiliado') {
-                const m = document.getElementById('userMail').value;
-                const p = document.getElementById('userPass').value;
-                if(!m || !p) { alert("Ingrese credenciales"); return; }
-                document.getElementById('restringido-msg').style.display = 'none';
-            } else {
-                document.getElementById('restringido-msg').style.display = 'block';
-                document.getElementById('form-contenedor-qr').style.display = 'none';
-            }
-            document.getElementById('pantalla-bienvenida').style.display = 'none';
-            document.getElementById('interfaz-maestra').style.display = 'block';
+         if(tipo === 'afiliado') {
+        // Acceso total: se muestra todo
+        document.getElementById('restringido-msg').style.display = 'none';
+        if(document.getElementById('form-contenedor-qr')) {
+            document.getElementById('form-contenedor-qr').style.display = 'block';
+         }
+       } else {
+        // Acceso visitante: solo bloqueamos la creación de Carnet QR
+        if(document.getElementById('restringido-msg')) {
+            document.getElementById('restringido-msg').style.display = 'block';
+         }
+        if(document.getElementById('form-contenedor-qr')) {
+            document.getElementById('form-contenedor-qr').style.display = 'none';
+        }
+    }
+    // ESTO ES LO IMPORTANTE: Liberamos la interfaz para ambos casos
+    document.getElementById('pantalla-bienvenida').style.display = 'none';
+    document.getElementById('interfaz-maestra').style.display = 'block';
+    }
         }
 
         function generarQR() {
