@@ -82,7 +82,7 @@
         <header class="header-main">
             <div class="idiomas-container">
                 <button class="lang-btn">ES</button><button class="lang-btn">PT</button><button class="lang-btn">EN</button>
-            </div>
+             </div>
             <nav class="nav-container">
                 <button class="nav-btn" onclick="showTab('inicio')">Inicio</button>
                 <button class="nav-btn" onclick="showTab('directorio')">Directorio</button>
@@ -90,6 +90,9 @@
                 <button class="nav-btn" id="btn-carnet" onclick="showTab('carnetizacion')">Carnetización QR</button>
                 <button class="nav-btn" onclick="showTab('ejes')">Ejes Comerciales</button>
                 <button class="nav-btn" onclick="showTab('afiliacion')">Afiliación</button>
+                <button class="nav-btn" onclick="showTab('contactenos')">Contáctenos</button>
+                <button class="nav-btn" onclick="showTab('patrocinadores-area')">Ofertas y Servicios</button>
+             </div>
             </nav>
         </header>
 
@@ -198,11 +201,64 @@
             <h2 style="color:var(--oro);">AFILIACIÓN 2026</h2>
             <button class="nav-btn" style="padding: 20px;">⬇️ DESCARGAR FORMATOS OFICIALES</button>
         </div>
-
+         
         <footer>
-            <h2 style="color:var(--oro);">CONTÁCTENOS</h2>
-            <p>📧 confederacionpanamericana2026@gmail.com</p>
+             <div id="contactenos" class="section" style="display:none;>
+               </div>
+
+             <div id="patrocinadores-area" class="section" style="display:none; padding: 40px 20px;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="color: var(--oro); font-size: 2.2rem; margin-bottom: 10px;">CENTRO DE BENEFICIOS CPKD</h2>
+        <p style="color: #ccc; font-size: 1.1rem;">Exclusivo para afiliados con Identidad Digital vigente</p>
+        <div style="width: 60px; height: 4px; background: var(--oro); margin: 20px auto;"></div>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap;">
+        <span style="border: 1px solid var(--oro); color: var(--oro); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">🎓 UNIVERSIDADES</span>
+        <span style="border: 1px solid var(--oro); color: var(--oro); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">🥋 EQUIPAMIENTO</span>
+        <span style="border: 1px solid var(--oro); color: var(--oro); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">🏥 SALUD</span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto;">
+        
+        <div style="background: #1a1a1a; border-radius: 15px; overflow: hidden; border: 1px solid #333; transition: 0.3s;">
+            <div style="height: 150px; background: #333; display: flex; align-items: center; justify-content: center; color: #666;">
+                [LOGO UNIVERSIDAD ALIADA]
+            </div>
+            <div style="padding: 20px;">
+                <span style="color: var(--oro); font-size: 0.7rem; font-weight: bold; text-transform: uppercase;">Convenio Académico</span>
+                <h3 style="color: #fff; margin: 10px 0;">BECAS PARA DEPORTISTAS</h3>
+                <p style="color: #aaa; font-size: 0.9rem;">Descuentos del 25% al 50% en pensiones para atletas de la CPKD. (Válido según Ley del Deporte).</p>
+                <button style="width: 100%; margin-top: 15px; background: transparent; border: 1px solid var(--oro); color: var(--oro); padding: 10px; cursor: pointer;">Ver Requisitos</button>
+            </div>
+        </div>
+
+        <div style="background: #1a1a1a; border-radius: 15px; overflow: hidden; border: 1px solid #333;">
+            <div style="height: 150px; background: #333; display: flex; align-items: center; justify-content: center; color: #666;">
+                [LOGO TIENDA DEPORTIVA]
+            </div>
+            <div style="padding: 20px;">
+                <span style="color: var(--oro); font-size: 0.7rem; font-weight: bold; text-transform: uppercase;">Tienda Oficial</span>
+                <h3 style="color: #fff; margin: 10px 0;">EQUIPAMIENTO HOMOLOGADO</h3>
+                <p style="color: #aaa; font-size: 0.9rem;">15% de descuento en Karateguis y Protecciones al presentar su código QR de afiliado.</p>
+                <button style="width: 100%; margin-top: 15px; background: transparent; border: 1px solid var(--oro); color: var(--oro); padding: 10px; cursor: pointer;">Obtener Cupón</button>
+            </div>
+        </div>
+
+        <div style="background: rgba(212, 175, 55, 0.05); border-radius: 15px; border: 1px dashed var(--oro); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center;">
+            <p style="color: var(--oro); font-weight: bold;">¿QUIERE SER PATROCINADOR?</p>
+            <p style="color: #888; font-size: 0.8rem; margin-bottom: 20px;">Posicione su empresa aquí ante miles de usuarios.</p>
+            <button onclick="showTab('patrocinios')" style="background: var(--oro); border: none; color: #000; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer;">Ver Propuesta</button>
+        </div>
+
+    </div>
+</div>
+             </div>
+
+    <footer style="background: #000; color: #fff; padding: 20px; text-align: center; border-top:center, border-top:2px solid var(--or);">
+       <p>📧 confederacionpanamericana2026@gmail.com</p>
             <p>© 2026 Confederación Panamericana de Karate Do | Brasil</p>
+
         </footer>
     </div>
 
