@@ -64,8 +64,7 @@
         footer { background: #000; border-top: 2px solid var(--oro); padding: 40px 20px; text-align: center; margin-top: 50px; }
         .social-icons a { color: var(--oro); font-size: 2rem; margin: 0 15px; text-decoration: none; }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  </head>
+</head>
 <body>
 
     <div id="pantalla-bienvenida">
@@ -173,23 +172,26 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
             <div id="restringido-msg" style="display:none; color:red; margin-bottom:20px;">⚠️ Acceso exclusivo para Afiliados.</div>
             <div id="form-contenedor-qr">
                 <div class="form-carnet">
-    <label>Nombre Completo:</label><input type="text" id="qrNombre" placeholder="Ej: LUIS HUAMAN">
-    <label>Grado (Dan/Kyu):</label><input type="text" id="qrGrado" placeholder="Ej: 6to DAN">
-    <label>Función:</label>
-    <select id="qrFun">
-        <option value="ATLETA">ATLETA</option>
-        <option value="COACH">COACH</option>
-        <option value="ARBITRO">ARBITRO</option>
-        <option value="DIRECTIVO">DIRECTIVO</option>
-         <option value="SOCIO">SOCIO</option>
-    </select>
-   <label style="margin-top:10px; display:block; color: var(--oro);">Subir Foto de Perfil (Galería/PC):</label>
-<input type="file" id="inputFoto" accept="image/*" style="margin-bottom:15px; color:white; background: #111; padding: 5px; width: 100%; border-radius: 5px; border: 1px solid #333;">
-    
-    <button class="nav-btn" onclick="generarQR()" style="width: 100%;">GENERAR IDENTIDAD OFICIAL</button>
-    
-    <button id="btnDescargar" class="nav-btn" style="width: 100%; margin-top: 10px; background: #222; color: var(--oro); border: 1px solid var(--oro); display: none;" onclick="descargarCarnet()">📥 DESCARGAR CARNET (PNG)</button>
-</div>
+                    <label>Información Personal</label>
+                    <input type="text" id="qrNombre" placeholder="Nombre Completo" class="full-input">
+                    <input type="number" id="qrEdad" placeholder="Edad">
+                    <input type="date" id="qrFecha" placeholder="Fecha Nacimiento">
+                    
+                    <label>Información Técnica</label>
+                    <select id="qrFun" class="full-input">
+                        <option value="ATLETA">ATLETA</option>
+                        <option value="COACH">COACH</option>
+                        <option value="ARBITRO">ÁRBITRO</option>
+                        <option value="DIRECTIVO">DIRECTIVO</option>
+                        <option value="SOCIO">SOCIO</option>
+                    </select>
+                    <input type="text" id="qrGrado" placeholder="Grado (Kyu o Dan)">
+                    <input type="text" id="qrPais" placeholder="País">
+                    
+                    <label>Contacto y Multimedia</label>
+                    <input type="email" id="qrMail" placeholder="Correo electrónico">
+                    <input type="tel" id="qrTel" placeholder="Teléfono (+xx)">
+                    <input type="file" id="qrFoto" class="full-input">
                     
                     <button class="nav-btn full-input" onclick="generarQR()" style="padding: 15px;">GENERAR CARNET OFICIAL</button>
                 </div>
@@ -253,87 +255,27 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
             if(target) target.style.display = 'block';
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+
         function validarAcceso(tipo) {
-    const bienvenida = document.getElementById('pantalla-bienvenida');
-    const interfaz = document.getElementById('interfaz-maestra');
-    const areaQR = document.getElementById('form-contenedor-qr');
-    const msgLock = document.getElementById('restringido-msg');
-    const navBtnQR = document.getElementById('btn-carnet'); // Identificamos el botón oculto
-
-    if(tipo === 'afiliado') {
-        const m = document.getElementById('userMail').value;
-        const p = document.getElementById('userPass').value;
-        
-        // Validación de seguridad
-        if(!m || !p) { 
-            alert("Sensei, por favor ingrese las credenciales de afiliado."); 
-            return; 
-        }
-        
-        // SI ES AFILIADO: Mostramos el botón en el menú y el formulario
-        navBtnQR.style.display = 'block'; 
-        areaQR.style.display = 'block';
-        msgLock.style.display = 'none';
-        
-        alert("Acceso de Afiliado concedido. Sistema de Carnetización activado.");
-    } else {
-        // SI ES VISITANTE: El botón de carnetización se queda oculto
-        navBtnQR.style.display = 'none';
-        areaQR.style.display = 'none';
-        msgLock.style.display = 'block';
-        
-        alert("Acceso como Visitante. El sistema de carnetización está restringido.");
-    }
-    
-    bienvenida.style.display = 'none';
-    interfaz.style.display = 'block';
-   }
+            if(tipo === 'afiliado') {
+                document.getElementById('restringido-msg').style.display = 'none';
+                document.getElementById('form-contenedor-qr').style.display = 'block';
+            } else {
+                document.getElementById('restringido-msg').style.display = 'block';
+                document.getElementById('form-contenedor-qr').style.display = 'none';
+            }
+            document.getElementById('pantalla-bienvenida').style.display = 'none';
+            document.getElementById('interfaz-maestra').style.display = 'block';
         }
 
-       function generarQR() {
-    const n = document.getElementById('qrNombre').value;
-    const g = document.getElementById('qrGrado').value;
-    const f = document.getElementById('qrFun').value;
-    const archivoFoto = document.getElementById('inputFoto').files[0];
-    
-    if(!n || !g) { alert("Por favor, ingrese Nombre y Grado"); return; }
-
-    // 1. Procesar la foto cargada por el usuario
-    if (archivoFoto) {
-        const lector = new FileReader();
-        lector.onload = function(e) {
-            document.getElementById("foto-carnet-preview").src = e.target.result;
-        }
-        lector.readAsDataURL(archivoFoto);
-    }
-
-    // 2. Insertar textos en el carnet
-    document.getElementById("det-nombre").innerText = n;
-    document.getElementById("det-grado-fun").innerText = g + " - " + f;
-    
-    // 3. Generar QR de seguridad
-    const qrc = document.getElementById("qrcode");
-    qrc.innerHTML = "";
-    new QRCode(qrc, { 
-        text: "CPKD-2026|" + n + "|" + g + "|" + f, 
-        width: 90, height: 90 
-    });
-
-    // 4. Mostrar el carnet y habilitar descarga
-    document.getElementById("resultado-qr").style.display = "block";
-    document.getElementById("btnDescargar").style.display = "block";
-}
-
-// Función para convertir el carnet en imagen y bajarla al móvil/PC
-function descargarCarnet() {
-    const carnet = document.getElementById("resultado-qr");
-    html2canvas(carnet).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'Carnet_CPKD_2026.png';
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    });
-}
+        function generarQR() {
+            const n = document.getElementById('qrNombre').value;
+            if(!n) return alert("Por favor, ingrese al menos el nombre.");
+            const qrc = document.getElementById("qrcode");
+            qrc.innerHTML = "";
+            new QRCode(qrc, { text: `CPKD-ID:${n}`, width: 150, height: 150 });
+            document.getElementById("id-det").innerText = n;
+            document.getElementById("resultado-qr").style.display = "inline-block";
         }
 
         const basePaises = [
