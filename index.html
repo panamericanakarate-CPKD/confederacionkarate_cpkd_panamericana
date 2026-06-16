@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -70,25 +70,28 @@
     <div id="pantalla-bienvenida">
         <div class="box-acceso">
             <img src="logo_cpkd.png" class="logo-login" alt="CPKD">
-            <h1 style="color:var(--oro);">SISTEMA PANAMERICANO CPKD</h1>
+            <h1 id="lbl-bienvenida" style="color:var(--oro);">SISTEMA PANAMERICANO CPKD</h1>
             <input type="email" id="userMail" class="login-input" placeholder="Correo de Afiliado">
             <input type="password" id="userPass" class="login-input" placeholder="Contraseña">
-            <button class="nav-btn" style="width: 100%; margin-top:10px;" onclick="validarAcceso('afiliado')">Entrar como Afiliado</button>
+            <button id="btn-entrar-afiliado" class="nav-btn" style="width: 100%; margin-top:10px;" onclick="validarAcceso('afiliado')">Entrar como Afiliado</button>
             <p style="margin: 15px 0; color: #666;">— o —</p>
-            <button class="nav-btn" style="background:#444; color:white; width:100%;" onclick="validarAcceso('visitante')">Modo Visitante (Limitado)</button>
+            <button id="btn-entrar-visitante" class="nav-btn" style="background:#444; color:white; width:100%;" onclick="validarAcceso('visitante')">Modo Visitante (Limitado)</button>
         </div>
     </div>
 
     <div id="interfaz-maestra">
         <header class="header-main">
             <div class="idiomas-container">
-                <button class="lang-btn">ES</button><button class="lang-btn">PT</button><button class="lang-btn">EN</button>
+                <button class="lang-btn" onclick="cambiarIdioma('es')">ES</button>
+                <button class="lang-btn" onclick="cambiarIdioma('pt')">PT</button>
+                <button class="lang-btn" onclick="cambiarIdioma('en')">EN</button>
             </div>
             <nav class="nav-container">
                 <button class="nav-btn" onclick="showTab('inicio')">Inicio</button>
                 <button class="nav-btn" onclick="showTab('directorio')">Directorio</button>
                 <button class="nav-btn" onclick="showTab('calendario')">Calendario</button>
-                <button class="nav-btn" onclick="showTab('carnetizacion')">Carnetización QR</button>
+                <button class="nav-btn" id="btn-carnet" style="display: none;" onclick="showTab('carnetizacion')">Carnetización QR</button>
+                <button class="nav-btn" id="btn-admin" style="display: none; background: #fff; color: #000;" onclick="showTab('panel-administracion')">Panel Gestión</button>
                 <button class="nav-btn" onclick="showTab('afiliacion')">Afiliación</button>
                 <button class="nav-btn" onclick="showTab('ofertas')">Ofertas y Servicios</button>
                 <button class="nav-btn" onclick="showTab('estatus-tecnico')">Validación de Grado</button>
@@ -99,39 +102,32 @@
         <div id="inicio" class="section" style="display: block;">
             <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 30px;">
                 <div style="text-align: center;">
-                    <img src="presidente.jpg" style="width: 250px; border: 3px solid var(--oro); border-radius: 15px;">
+                    <img src="presidente.jpeg" style="width: 250px; border: 3px solid var(--oro); border-radius: 15px;">
                     <h3 style="color: var(--oro);">LUIS HUAMAN MALDONADO ∴</h3>
-                    <p>PRESIDENTE CPKD</p>
+                    <p id="lbl-cargo-pres">PRESIDENTE CPKD</p>
                 </div>
                 <div style="flex: 1; min-width: 300px; padding: 20px;">
-                    <h2 style="color: var(--oro); border-left: 4px solid var(--oro); padding-left: 15px;">MENSAJE DE LA PRESIDENCIA</h2>
-                    <p style="text-align: justify; line-height: 1.6;">"Hoy nos encontramos en el inicio de una nueva era. Más allá de las distancias geográficas que nos separan, estamos más unidos que nunca a través de un mismo espíritu y una misma visión.
-</p>
-<p> 
-Nuestra Fraternidad Marcial es el pilar que nos sostiene; es ese respeto mutuo y esa disciplina compartida lo que nos hace invencibles como comunidad. En este 2026, estamos dando un paso histórico al abrazar la tecnología como un puente para fortalecernos, capacitarnos y estar conectados, demostrando que la tradición y la innovación pueden caminar de la mano hacia la excelencia.
-</p>
-<p>
-Que la voluntad y la fe nos guíen para encontrarnos en cada tatami de este calendario 2026: desde Guatemala hasta Perú, pasando por Ecuador, Brasil, Chile y México. Que cada evento sea una celebración de nuestra pasión y esfuerzo.
-</p>
-<p>
-Les deseo a cada uno de ustedes atletas, maestros y directivos el mayor de los éxitos en sus entrenamientos y metas personales. Que este sea un año de victorias, pero sobre todo, de crecimiento integral.
-</p>
-<p>
-Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente, una solo Destino. Latinoamérica unida por el Karate!"
-                   </p>
+                    <h2 id="lbl-titulo-mensaje" style="color: var(--oro); border-left: 4px solid var(--oro); padding-left: 15px;">MENSAJE DE LA PRESIDENCIA</h2>
+                    <div id="txt-mensaje-presidencia">
+                        <p style="text-align: justify; line-height: 1.6;">"Hoy nos encontramos en el inicio de una nueva era. Más allá de las distancias geográficas que nos separan, estamos más unidos que nunca a través de un mismo espíritu y una misma visión.</p>
+                        <p style="text-align: justify; line-height: 1.6;">Nuestra Fraternidad Marcial es el pilar que nos sostiene; es ese respeto mutuo y esa disciplina compartida lo que nos hace invencibles como comunidad. En este 2026, estamos dando un paso histórico al abrazar la tecnología como un puente para fortalecernos, capacitarnos y estar conectados, demostrando que la tradición y la innovación pueden caminar de la mano hacia la excelencia.</p>
+                        <p style="text-align: justify; line-height: 1.6;">Que la voluntad y la fe nos guíen para encontrarnos en cada tatami de este calendario 2026: desde Guatemala hasta Perú, pasando por Ecuador, Brasil, Chile y México. Que cada evento sea una celebración de nuestra pasión y esfuerzo.</p>
+                        <p style="text-align: justify; line-height: 1.6;">Les deseo a cada uno de ustedes atletas, maestros y directivos el mayor de los éxitos en sus entrenamientos y metas personales. Que este sea un año de victorias, pero sobre todo, de crecimiento integral.</p>
+                        <p style="text-align: justify; line-height: 1.6;">Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente, una solo Destino. Latinoamérica unida por el Karate!"</p>
+                    </div>
                 </div>
             </div>
             <div class="seccion-paises">
                 <div class="mapa-contenedor"><img src="mapa.png" class="mapa-latam" alt="Mapa"></div>
-                <h2 style="color:var(--oro);">NACIONES AFILIADAS</h2>
+                <h2 id="lbl-naciones-afiliadas" style="color:var(--oro);">NACIONES AFILIADAS</h2>
                 <div class="cinturon-wrapper"><div id="cinturon"></div></div>
             </div>
         </div>
 
         <div id="directorio" class="section">
-            <h2 style="color:var(--oro); text-align: center;">DIRECTORIO EJECUTIVO PANAMERICANO 2026</h2>
+            <h2 id="lbl-tit-directorio" style="color:var(--oro); text-align: center;">DIRECTORIO EJECUTIVO PANAMERICANO 2026</h2>
             <div class="directorio-galeria">
-                <div class="card"><div class="foto-wrapper"><img src="presidente.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>LUIS HUAMAN MALDONADO</h3><span class="cargo-text">PRESIDENTE CPKD</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="presidente.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>LUIS HUAMAN MALDONADO</h3><span class="cargo-text">PRESIDENTE CPKD</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="vice1.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/ec.png" class="bandera-badge"></div><h3>GABRIEL PANCHANA</h3><span class="cargo-text">1ER VICEPRESIDENTE CPKD</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="vice2.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/mx.png" class="bandera-badge"></div><h3>JUAN HERNÁNDEZ LIZARRAGA</h3><span class="cargo-text">2DO VICEPRESIDENTE CPKD</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="secretario.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>ALAN PEREIRA DA SILVA</h3><span class="cargo-text">SECRETARIO GENERAL CPKD</span></div>
@@ -141,22 +137,22 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Peru.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>WILLY VELA GONZÁLEZ</h3><span class="cargo-text">DIR. EJECUTIVO PERÚ</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Bolivia.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/bo.png" class="bandera-badge"></div><h3>WILFREDO VARGAS VENACIO</h3><span class="cargo-text">DIR. EJECUTIVO BOLIVIA</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Paraguay.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/py.png" class="bandera-badge"></div><h3>TOMÁS ARTURO ORUÉ</h3><span class="cargo-text">DIR. EJECUTIVO PARAGUAY</span></div>
-                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Uruguay.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/uy.png" class="bandera-badge"></div><h3>OMAR ANIBAL DIAZ</h3><span class="cargo-text">DIR. EJECUTIVO URUGUAY</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_chile.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/cl.png" class="bandera-badge"></div><h3>CESAR BRITO NUÑEZ</h3><span class="cargo-text">DIR. EJECUTIVO CHILE</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_brasil2.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>FERNANDO DE LIMA</h3><span class="cargo-text">DIR. EJECUTIVO BRASIL</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Perú2.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>PAULO DELGADO MESCUA</h3><span class="cargo-text">DIR. EJECUTIVO PERÚ</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="ejecutivo_Panamá.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pa.png" class="bandera-badge"></div><h3>ELENA HENRY</h3><span class="cargo-text">DIR. EJECUTIVA PANAMÁ</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="ejecutivo_colombia.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/co.png" class="bandera-badge"></div><h3>MILENA ALVAREZ</h3><span class="cargo-text">DIR. EJECUTIVA COLOMBIA</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="legal1.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>DRA. ANDREA CHAPARRO</h3><span class="cargo-text">ASESORÍA LEGAL</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="legal2.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>DR. CRISTHIAN CALDERÓN</h3><span class="cargo-text">ASESORÍA LEGAL</span></div>
+                <div class="card"><div class="foto-wrapper"><img src="jeferpi.jpeg" class="miembro-foto"><img src="https://flagcdn.com/w80/pe.png" class="bandera-badge"></div><h3>DR. JUAN MANUEL PEREIRA</h3><span class="cargo-text">JEFE DE RELACIONES PÚBLICAS INTERNACIONALES</span></div>
                 <div class="card"><div class="foto-wrapper"><img src="Jefe comite arbitral.jpg" class="miembro-foto"><img src="https://flagcdn.com/w80/br.png" class="bandera-badge"></div><h3>ARLINDO VIEIRA</h3><span class="cargo-text">JEFE COMITÉ ARBITRAL</span></div>
-
-                </div>
+            </div>
         </div>
 
         <div id="calendario" class="section">
-            <h2 style="color:var(--oro); text-align: center;">CALENDARIO OFICIAL 2026</h2>
+            <h2 id="lbl-tit-cal" style="color:var(--oro); text-align: center;">CALENDARIO OFICIAL 2026</h2>
             <table class="calendario-tabla">
-                <thead><tr><th>Mes</th><th>Evento</th><th>Sede</th><th>Bases</th></tr></thead>
+                <thead><tr id="row-tabla-cal"><th>Mes</th><th>Evento</th><th>Sede</th><th>Bases</th></tr></thead>
                 <tbody>
                     <tr><td>02 Mayo</td><td>I OPEN INTERNACIONAL CPKD</td><td>Escuintla-Guatemala 🇬🇹</td><td>📥 Descargar</td></tr>
                     <tr><td>13 -14 Junio</td><td>I COPA LIBERTADORES CPKD</td><td>Guayaquil-Ecuador 🇪🇨</td><td>📥 Descargar</td></tr>
@@ -169,16 +165,16 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
         </div>
 
         <div id="carnetizacion" class="section" style="text-align: center;">
-            <h2 style="color:var(--oro);">SISTEMA DE IDENTIDAD DIGITAL QR</h2>
+            <h2 id="lbl-tit-carnet" style="color:var(--oro);">SISTEMA DE IDENTIDAD DIGITAL QR</h2>
             <div id="restringido-msg" style="display:none; color:red; margin-bottom:20px;">⚠️ Acceso exclusivo para Afiliados.</div>
             <div id="form-contenedor-qr">
                 <div class="form-carnet">
-                    <label>Información Personal</label>
+                    <label id="lbl-info-p">Información Personal</label>
                     <input type="text" id="qrNombre" placeholder="Nombre Completo" class="full-input">
                     <input type="number" id="qrEdad" placeholder="Edad">
                     <input type="date" id="qrFecha" placeholder="Fecha Nacimiento">
-                    
-                    <label>Información Técnica</label>
+                   
+                    <label id="lbl-info-t">Información Técnica</label>
                     <select id="qrFun" class="full-input">
                         <option value="ATLETA">ATLETA</option>
                         <option value="COACH">COACH</option>
@@ -188,13 +184,13 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
                     </select>
                     <input type="text" id="qrGrado" placeholder="Grado (Kyu o Dan)">
                     <input type="text" id="qrPais" placeholder="País">
-                    
-                    <label>Contacto y Multimedia</label>
+                   
+                    <label id="lbl-info-m">Contacto y Multimedia</label>
                     <input type="email" id="qrMail" placeholder="Correo electrónico">
                     <input type="tel" id="qrTel" placeholder="Teléfono (+xx)">
                     <input type="file" id="qrFoto" class="full-input">
-                    
-                    <button class="nav-btn full-input" onclick="generarQR()" style="padding: 15px;">GENERAR CARNET OFICIAL</button>
+                   
+                    <button id="btn-generar-carnet" class="nav-btn full-input" onclick="generarQR()" style="padding: 15px;">GENERAR CARNET OFICIAL</button>
                 </div>
                 <div id="resultado-qr">
                     <div id="qrcode" style="padding: 15px; background: white; display: inline-block; border-radius: 10px;"></div>
@@ -203,45 +199,64 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
             </div>
         </div>
 
-        <div id="afiliacion" class="section" style="text-align:center;">
-            <h2 style="color:var(--oro);">PROCESO DE AFILIACIÓN 2026</h2>
-            <div style="background: var(--gris); padding: 40px; border-radius: 20px; border: 1px dashed var(--oro); max-width: 600px; margin: auto;">
-                <button class="nav-btn" style="padding: 20px; width: 100%; margin-bottom: 20px;">⬇️ DESCARGAR FORMATOS OFICIALES (PDF)</button>
-                <button class="nav-btn" style="padding: 20px; width: 100%; background: #444; color: white;">📖 VER INSTRUCTIVO DIGITAL</button>
+        <div id="panel-administracion" class="section">
+            <h2 style="color:var(--oro); text-align: center;"><span id="lbl-gest-nac">GESTIÓN NACIONAL:</span> <span id="pais-director">---</span></h2>
+            <div style="background: var(--gris); padding: 20px; border-radius: 10px; border: 1px solid var(--oro); margin-bottom: 20px;">
+                <h4 id="lbl-act-nuevo" style="color: var(--oro); margin: 0 0 10px 0;">+ Activar Nuevo Afiliado</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                    <input type="text" id="admNombre" placeholder="Nombre" class="login-input">
+                    <input type="email" id="admEmail" placeholder="Correo" class="login-input">
+                    <input type="text" id="admPass" placeholder="ID/Pasaporte" class="login-input">
+                    <select id="admCargo" class="login-input">
+                        <option value="ATLETA">ATLETA</option>
+                        <option value="MAESTRO">MAESTRO</option>
+                        <option value="DIRECTIVO">DIRECTIVO</option>
+                    </select>
+                    <button id="btn-activar-adm" onclick="agregarAfiliado()" class="nav-btn">ACTIVAR</button>
+                </div>
             </div>
+            <table class="calendario-tabla">
+                <thead><tr id="row-tabla-adm"><th>Nombre</th><th>Correo</th><th>Cargo</th><th>Acción</th></tr></thead>
+                <tbody id="tabla-afiliados-cuerpo"></tbody>
+            </table>
+        </div>
+
+        <div id="afiliacion" class="section">
+            <h2 id="lbl-tit-afiliacion" style="color:var(--oro); text-align: center;">AFILIACIONES NACIONALES 2026</h2>
+            <p style="text-align: center;">Módulo oficial para el registro técnico y administrativo de Federaciones y Asociaciones Continental.</p>
         </div>
 
         <div id="ofertas" class="section">
-            <h2 style="color:var(--oro); text-align: center;">CENTRO DE BENEFICIOS CPKD</h2>
+            <h2 id="lbl-titulo-beneficios" style="color:var(--oro); text-align: center;">CENTRO DE BENEFICIOS CPKD</h2>
             <div class="grid-comercial">
-                <div class="card-comercial"><h3>🎓 Educación</h3><p>Realizaremos los esfuerzos necesarios para conseguir becas integrales y medias becas en Convenios con Universidades, Institutos superiores técnicos, escuelas privadas aliadas a la CPKD en todo el continente.</p></div>
-                <div class="card-comercial"><h3>🥋 Equipamiento</h3><p>Tendremos acuerdos comerciales con todas las Marcas de Karateguis y demás implementos, así como también cualqueir articulo deportivo tales como, buzos, polos, zapatillas etc. con descuentos exclusivos para todo afiliado.</p></div>
-                <div class="card-comercial"><h3>🏨 Logística</h3><p>Este espacio será de gesión con las cadenas de Hoteles, Restaurantes y transporte Aéreo/Terrestre, de cada país y haciendo uso en todo el Continente.</p></div>
+                <div class="card-comercial"><h3>🎓 <span id="txt-b1-titulo">Educación</span></h3><p id="txt-b1-desc">Realizaremos los esfuerzos necesarios para conseguir becas integrales y medias becas en Convenios con Universidades, Institutos superiores técnicos, escuelas privadas aliadas a la CPKD en todo el continente.</p></div>
+                <div class="card-comercial"><h3>🥋 <span id="txt-b2-titulo">Equipamiento</span></h3><p id="txt-b2-desc">Tendremos acuerdos comerciales con todas las Marcas de Karateguis y demás implementos, así como también cualqueir articulo deportivo tales como, buzos, polos, zapatillas etc. con descuentos exclusivos para todo afiliado.</p></div>
+                <div class="card-comercial"><h3>🏨 <span id="txt-b3-titulo">Logística</span></h3><p id="txt-b3-desc">Este espacio será de gesión con las cadenas de Hoteles, Restaurantes y transporte Aéreo/Terrestre, de cada país y haciendo uso en todo el Continente.</p></div>
             </div>
             <div style="text-align: center; margin-top: 30px; padding: 20px; border: 2px solid var(--oro); border-radius: 15px;">
-                <p>¿Deseas que tu empresa sea parte de esta plataforma? </p>
-                <button class="nav-btn" onclick="showTab('contactenos')">CONTÁCTANOS PARA PATROCINIO</button>
+                <p id="lbl-patrocinio">¿Deseas que tu empresa sea parte de esta plataforma? </p>
+                <button id="btn-cont-patr" class="nav-btn" onclick="showTab('contactenos')">CONTÁCTANOS PARA PATROCINIO</button>
             </div>
         </div>
 
         <div id="estatus-tecnico" class="section">
-            <h2 style="color:var(--oro); text-align: center;">VALIDACIÓN DE GRADO CONTINENTAL</h2>
-            <p style="text-align: center; color: #aaa;">Consulta transparente de grados Kyu y Dan de toda la Confederación.</p>
+            <h2 id="lbl-tit-val" style="color:var(--oro); text-align: center;">VALIDACIÓN DE GRADO CONTINENTAL</h2>
+            <p id="lbl-sub-val" style="text-align: center; color: #aaa;">Consulta transparente de grados Kyu y Dan de toda la Confederación.</p>
             <div style="max-width: 500px; margin: 30px auto; text-align: center;">
-                <input type="text" placeholder="Ingrese Código de Registro o DNI" class="login-input" style="text-align: center;">
-                <button class="nav-btn" style="width: 100%; margin-top: 15px;">CONSULTAR ESTATUS</button>
+                <input type="text" id="input-busqueda-val" placeholder="Ingrese Código de Registro o DNI" class="login-input" style="text-align: center;">
+                <button id="btn-consultar-val" class="nav-btn" style="width: 100%; margin-top: 15px;">CONSULTAR ESTATUS</button>
             </div>
         </div>
 
         <div id="contactenos" class="section" style="text-align: center;">
-            <h2 style="color: var(--oro);">CONTÁCTENOS</h2>
+            <h2 id="lbl-tit-contacto" style="color: var(--oro);">CONTÁCTENOS</h2>
             <p style="font-size: 1.2rem;">📧 confederacionpanamericana2026@gmail.com</p>
             <div class="social-icons" style="margin: 30px 0;">
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-tiktok"></i></a>
             </div>
-            <p>Sede Oficial: Parauapebas, Pará - Brasil.</p>
+            <p id="lbl-sede-oficial">Sede Oficial: Parauapebas, Pará - Brasil.</p>
         </div>
 
         <footer>
@@ -257,35 +272,96 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        // BASE DE DATOS MAESTRA
+        const directoresEjecutivos = [
+            { email: "director.peru@cpkd.com", pass: "PERU2026", pais: "PERÚ" },
+            { email: "director.brasil@cpkd.com", pass: "BRASIL2026", pais: "BRASIL" },
+            { email: "director.mexico@cpkd.com", pass: "MEXICO2026", pais: "MEXICO" },
+            { email: "director.guatemala@cpkd.com", pass: "GUATEMALA2026", pais: "GUATEMALA" },
+            { email: "director.chile@cpkd.com", pass: "CHILE2026", pais: "CHILE" },
+            { email: "director.ecuador@cpkd.com", pass: "ECUADOR2026", pais: "ECUADOR" },
+            { email: "director.bolivia@cpkd.com", pass: "BOLIVIA2026", pais: "BOLIVIA" },
+            { email: "director.paraguay@cpkd.com", pass: "PARAGUAY2026", pais: "PARAGUAY" },
+            { email: "director.uruguay@cpkd.com", pass: "URUGUAY2026", pais: "URUGUAY" },
+            { email: "director.colombia@cpkd.com", pass: "COLOMBI2026", pais: "COLOMBIA" },
+            { email: "director.argentina@cpkd.com", pass: "ARGENTINA2026", pais: "ARGENTINA" },    
+            { email: "director.panama@cpkd.com", pass: "PANAMA2026", pais: "PANAMA" },
+            { email: "director.costarica@cpkd.com", pass: "COSTARICA2026", pais: "COSTA RICA" },
+            { email: "director.eeuu@cpkd.com", pass: "EEUU2026", pais: "EEUU" },
+            { email: "director.elsalvador@cpkd.com", pass: "ELSALVADOR2026", pais: "EL SALVADOR" },
+            { email: "director.santodomingo@cpkd.com", pass: "SANTODOMINGO2026", pais: "SANTO DOMINGO" },
+            { email: "director.cuba@cpkd.com", pass: "CUBA2026", pais: "CUBA" }
+        ];
+        let baseDatosAfiliados = [];
+
         function validarAcceso(tipo) {
-            if(tipo === 'afiliado') {
-                document.getElementById('restringido-msg').style.display = 'none';
-                document.getElementById('form-contenedor-qr').style.display = 'block';
-            } else {
-                document.getElementById('restringido-msg').style.display = 'block';
-                document.getElementById('form-contenedor-qr').style.display = 'none';
+            const m = document.getElementById('userMail').value;
+            const p = document.getElementById('userPass').value;
+            
+            const director = directoresEjecutivos.find(d => d.email === m && d.pass === p);
+            
+            if (director) {
+                alert("BIENVENIDO DIRECTOR DE " + director.pais);
+                document.getElementById('pais-director').innerText = director.pais;
+                document.getElementById('btn-admin').style.display = 'block';
+                document.getElementById('btn-carnet').style.display = 'block';
+                loguearExito();
+                return;
             }
+
+            const afiliado = baseDatosAfiliados.find(a => a.email === m && a.pass === p);
+            if (afiliado) {
+                alert("BIENVENIDO " + afiliado.nombre);
+                document.getElementById('btn-carnet').style.display = 'block';
+                loguearExito();
+            } else if (tipo === 'visitante') {
+                loguearExito();
+            } else {
+                alert("Acceso denegado. Contacte a su Director Nacional.");
+            }
+        }
+
+        function loguearExito() {
             document.getElementById('pantalla-bienvenida').style.display = 'none';
             document.getElementById('interfaz-maestra').style.display = 'block';
         }
 
         function generarQR() {
             const n = document.getElementById('qrNombre').value;
-            if(!n) return alert("Por favor, ingrese al menos el nombre.");
+            const g = document.getElementById('qrGrado').value;
+            
+            if(!n || !g) return alert("Sensei, complete nombre y grado.");
+            
             const qrc = document.getElementById("qrcode");
             qrc.innerHTML = "";
-            new QRCode(qrc, { text: `CPKD-ID:${n}`, width: 150, height: 150 });
-            document.getElementById("id-det").innerText = n;
-            document.getElementById("resultado-qr").style.display = "inline-block";
+            
+            const firmaValidacion = `https://cpkd.com/valida?id=${n}&grado=${g}&status=VERIFICADO`;
+            
+            new QRCode(qrc, { text: firmaValidacion, width: 150, height: 150 });
+            document.getElementById("id-det").innerText = "CERTIFICADO CPKD: " + n;
+            alert("QR generado con firma de autenticidad Panamericana.");
+        }
+
+        function agregarAfiliado() {
+            const nombre = document.getElementById('admNombre').value;
+            const email = document.getElementById('admEmail').value;
+            const pass = document.getElementById('admPass').value;
+            const cargo = document.getElementById('admCargo').value;
+            
+            if(!nombre || !email) return;
+            baseDatosAfiliados.push({ nombre, email, pass, cargo });
+            
+            const cuerpo = document.getElementById('tabla-afiliados-cuerpo');
+            cuerpo.innerHTML += `<tr><td>${nombre}</td><td>${email}</td><td>${cargo}</td><td>✅ Activo</td></tr>`;
+            alert("Afiliado activado con éxito.");
         }
 
         const basePaises = [
             {n:"PERÚ",f:"pe"}, {n:"BRASIL",f:"br"}, {n:"MÉXICO",f:"mx"}, {n:"CHILE",f:"cl"},
             {n:"ECUADOR",f:"ec"}, {n:"BOLIVIA", f:"bo"}, {n:"GUATEMALA", f:"gt"},{n:"PARAGUAY", f:"py"}, {n:"COLOMBIA", f:"co"},
             {n:"COSTA RICA", f:"cr"}, {n:"PANAMÁ", f:"pa"}, {n:"EEUU", f:"us"}, {n:"HONDURAS", f:"hn"},
-            {n:"VENEZUELA", f:"ve"}, {n:"COSTA RICA", f:"cr"}, {n:"CUBA", f:"cu"}, {n:"EL SALVADOR", f:"sv"}, {n:"URUGUAY", f:"uy"},
+            {n:"VENEZUELA", f:"ve"}, {n:"CUBA", f:"cu"}, {n:"EL SALVADOR", f:"sv"}, {n:"URUGUAY", f:"uy"},
             {n:"HAITÍ", f:"ht"}, {n:"ARGENTINA", f:"ar"}
-
         ];
 
         const con = document.getElementById('cinturon');
@@ -296,6 +372,117 @@ Bienvenidos a la Confederación Panamericana de Karate.....¡Un solo Continente,
                 d.innerHTML = `<img src="https://flagcdn.com/w160/${p.f}.png"><span>${p.n}</span>`;
                 con.appendChild(d);
             });
+        }
+
+        // DICCIONARIO MAESTRO MULTILINGÜE INTEGRADO
+        const traducciones = {
+            'es': {
+                'menu': ['Inicio', 'Directorio', 'Calendario', 'Carnetización QR', 'Panel Gestión', 'Afiliación', 'Ofertas y Servicios', 'Validación de Grado', 'Contáctenos'],
+                'bienvenida': 'SISTEMA PANAMERICANO CPKD', 'entrar_af': 'Entrar como Afiliado', 'entrar_vis': 'Modo Visitante (Limitado)',
+                'cargo_pres': 'PRESIDENTE CPKD', 'tit_msg': 'MENSAJE DE LA PRESIDENCIA', 'nac_af': 'NACIONES AFILIADAS',
+                'tit_dir': 'DIRECTORIO EJECUTIVO PANAMERICANO 2026', 'tit_cal': 'CALENDARIO OFICIAL 2026', 'th_cal': ['Mes', 'Evento', 'Sede', 'Bases'],
+                'tit_carnet': 'SISTEMA DE IDENTIDAD DIGITAL QR', 'info_p': 'Información Personal', 'info_t': 'Información Técnica', 'info_m': 'Contacto y Multimedia', 'gen_car': 'GENERAR CARNET OFICIAL',
+                'gest_nac': 'GESTIÓN NACIONAL:', 'act_nu': '+ Activar Nuevo Afiliado', 'th_adm': ['Nombre', 'Correo', 'Cargo', 'Acción'],
+                'tit_afi': 'AFILIACIONES NACIONALES 2026', 'tit_ben': 'CENTRO DE BENEFICIOS CPKD',
+                'b1_t': 'Educación', 'b1_d': 'Realizaremos los esfuerzos necesarios para conseguir becas integrales y medias becas en Convenios con Universidades, Institutos superiores técnicos, escuelas privadas aliadas a la CPKD en todo el continente.',
+                'b2_t': 'Equipamiento', 'b2_d': 'Tendremos acuerdos comerciales con todas las Marcas de Karateguis y demás implementos, así como también cualqueir articulo deportivo tales como, buzos, polos, zapatillas etc. con descuentos exclusivos para todo afiliado.',
+                'b3_t': 'Logística', 'b3_d': 'Este espacio será de gesión con las cadenas de Hoteles, Restaurantes y transporte Aéreo/Terrestre, de cada país y haciendo uso en todo el Continente.',
+                'patr': '¿Deseas que tu empresa sea parte de esta plataforma?', 'btn_patr': 'CONTÁCTANOS PARA PATROCINIO',
+                'tit_val': 'VALIDACIÓN DE GRADO CONTINENTAL', 'sub_val': 'Consulta transparente de grados Kyu y Dan de toda la Confederación.', 'btn_val': 'CONSULTAR ESTATUS',
+                'tit_cont': 'CONTÁCTENOS', 'sede': 'Sede Oficial: Parauapebas, Pará - Brasil.'
+            },
+            'pt': {
+                'menu': ['Início', 'Diretório', 'Calendário', 'Carteira Digital QR', 'Painel Gestão', 'Filiação', 'Ofertas e Serviços', 'Validação de Graduação', 'Contate-nos'],
+                'bienvenida': 'SISTEMA PAN-AMERICANO CPKD', 'entrar_af': 'Entrar como Afiliado', 'entrar_vis': 'Modo Visitante (Limitado)',
+                'cargo_pres': 'PRESIDENTE CPKD', 'tit_msg': 'MENSAGEM DA PRESIDÊNCIA', 'nac_af': 'NAÇÕES AFILIADAS',
+                'tit_dir': 'DIRETÓRIO EXECUTIVO PAN-AMERICANO 2026', 'tit_cal': 'CALENDÁRIO OFICIAL 2026', 'th_cal': ['Mês', 'Evento', 'Sede', 'Bases'],
+                'tit_carnet': 'SISTEMA DE IDENTIDADE DIGITAL QR', 'info_p': 'Informações Pessoais', 'info_t': 'Informação Técnica', 'info_m': 'Contato e Multimídia', 'gen_car': 'GERAR CARTEIRA OFICIAL',
+                'gest_nac': 'GESTÃO NACIONAL:', 'act_nu': '+ Ativar Novo Afiliado', 'th_adm': ['Nome', 'Email', 'Cargo', 'Ação'],
+                'tit_afi': 'FILIAÇÕES NACIONAIS 2026', 'tit_ben': 'CENTRO DE BENEFÍCIOS CPKD',
+                'b1_t': 'Educação', 'b1_d': 'Realizaremos os esforços necessários para obter bolsas integrais e bolsas parciais em Convênios com Universidades, Institutos superiores técnicos, escolas privadas parceiras da CPKD em todo o continente.',
+                'b2_t': 'Equipamento', 'b2_d': 'Teremos acordos comerciais com todas as marcas de Karateguis e outros equipamentos, bem como qualquer artigo esportivo, como moletons, polos, tênis etc. com descontos exclusivos para todos os afiliados.',
+                'b3_t': 'Logística', 'b3_d': 'Este espaço será de gestão com as redes de Hotéis, Restaurantes e transporte Aéreo/Terrestre, de cada país e utilizando em todo o Continente.',
+                'patr': 'Deseja que sua empresa faça parte desta plataforma?', 'btn_patr': 'CONTATE-NOS PARA PATROCÍNIO',
+                'tit_val': 'VALIDAÇÃO DE GRADUAÇÃO CONTINENTAL', 'sub_val': 'Consulta transparente de graus Kyu e Dan de toda a Confederação.', 'btn_val': 'CONSULTAR STATUS',
+                'tit_cont': 'CONTATE-NOS', 'sede': 'Sede Oficial: Parauapebas, Pará - Brasil.'
+            },
+            'en': {
+                'menu': ['Home', 'Directory', 'Calendar', 'QR ID Card', 'Management Panel', 'Membership', 'Offers & Services', 'Rank Validation', 'Contact Us'],
+                'bienvenida': 'CPKD PAN-AMERICAN SYSTEM', 'entrar_af': 'Login as Member', 'entrar_vis': 'Visitor Mode (Limited)',
+                'cargo_pres': 'CPKD PRESIDENT', 'tit_msg': 'PRESIDENT MESSAGE', 'nac_af': 'AFFILIATED NATIONS',
+                'tit_dir': 'PAN-AMERICAN EXECUTIVE DIRECTORY 2026', 'tit_cal': 'OFFICIAL CALENDAR 2026', 'th_cal': ['Month', 'Event', 'Venue', 'Rules'],
+                'tit_carnet': 'QR DIGITAL IDENTITY SYSTEM', 'info_p': 'Personal Information', 'info_t': 'Technical Information', 'info_m': 'Contact & Multimedia', 'gen_car': 'GENERATE OFFICIAL CARD',
+                'gest_nac': 'NATIONAL MANAGEMENT:', 'act_nu': '+ Activate New Member', 'th_adm': ['Name', 'Email', 'Role', 'Action'],
+                'tit_afi': 'NATIONAL MEMBERSHIPS 2026', 'tit_ben': 'CPKD BENEFITS CENTER',
+                'b1_t': 'Education', 'b1_d': 'We will make the necessary efforts to obtain full and partial scholarships in Agreements with Universities, Technical Higher Institutes, private schools allied to the CPKD throughout the continent.',
+                'b2_t': 'Equipment', 'b2_d': 'We will have commercial agreements with all Brands of Karateguis and other implements, as well as any sporting article such as tracksuits, polos, shoes etc. with exclusive discounts for all members.',
+                'b3_t': 'Logistics', 'b3_d': 'This space will be managed with Hotel chains, Restaurants and Air/Land transportation, in each country and used throughout the Continent.',
+                'patr': 'Do you want your company to be part of this platform?', 'btn_patr': 'CONTACT US FOR SPONSORSHIP',
+                'tit_val': 'CONTINENTAL RANK VALIDATION', 'sub_val': 'Transparent consultation of Kyu and Dan ranks across the Confederation.', 'btn_val': 'CHECK STATUS',
+                'tit_cont': 'CONTACT US', 'sede': 'Official Headquarters: Parauapebas, Para - Brazil.'
+            }
+        };
+
+        function cambiarIdioma(lang) {
+            const t = traducciones[lang];
+            
+            // Traducir Botones del Menú Principal
+            const btns = document.querySelectorAll('.nav-container .nav-btn');
+            if(btns.length >= 9) {
+                btns[0].innerText = t.menu[0]; btns[1].innerText = t.menu[1]; btns[2].innerText = t.menu[2];
+                btns[3].innerText = t.menu[3]; btns[4].innerText = t.menu[4]; btns[5].innerText = t.menu[5];
+                btns[6].innerText = t.menu[6]; btns[7].innerText = t.menu[7]; btns[8].innerText = t.menu[8];
+            }
+
+            // Pantalla de Acceso
+            document.getElementById('lbl-bienvenida').innerText = t.bienvenida;
+            document.getElementById('btn-entrar-afiliado').innerText = t.entrar_af;
+            document.getElementById('btn-entrar-visitante').innerText = t.entrar_vis;
+
+            // Sección Inicio
+            document.getElementById('lbl-cargo-pres').innerText = t.cargo_pres;
+            document.getElementById('lbl-titulo-mensaje').innerText = t.tit_msg;
+            document.getElementById('lbl-naciones-afiliadas').innerText = t.nac_af;
+
+            // Secciones Títulos Básicos
+            document.getElementById('lbl-tit-directorio').innerText = t.tit_dir;
+            document.getElementById('lbl-tit-cal').innerText = t.tit_cal;
+            
+            const thsCal = document.querySelectorAll('#row-tabla-cal th');
+            if(thsCal.length >= 4) { thsCal[0].innerText = t.th_cal[0]; thsCal[1].innerText = t.th_cal[1]; thsCal[2].innerText = t.th_cal[2]; thsCal[3].innerText = t.th_cal[3]; }
+
+            // Carnetización
+            document.getElementById('lbl-tit-carnet').innerText = t.tit_carnet;
+            document.getElementById('lbl-info-p').innerText = t.info_p;
+            document.getElementById('lbl-info-t').innerText = t.info_t;
+            document.getElementById('lbl-info-m').innerText = t.info_m;
+            document.getElementById('btn-generar-carnet').innerText = t.gen_car;
+
+            // Gestión
+            document.getElementById('lbl-gest-nac').innerText = t.gest_nac;
+            document.getElementById('lbl-act-nuevo').innerText = t.act_nu;
+            const thsAdm = document.querySelectorAll('#row-tabla-adm th');
+            if(thsAdm.length >= 4) { thsAdm[0].innerText = t.th_adm[0]; thsAdm[1].innerText = t.th_adm[1]; thsAdm[2].innerText = t.th_adm[2]; thsAdm[3].innerText = t.th_adm[3]; }
+
+            // Afiliación y Beneficios
+            document.getElementById('lbl-tit-afiliacion').innerText = t.tit_afi;
+            document.getElementById('lbl-titulo-beneficios').innerText = t.tit_ben;
+            document.getElementById('txt-b1-titulo').innerText = t.b1_t; document.getElementById('txt-b1-desc').innerText = t.b1_d;
+            document.getElementById('txt-b2-titulo').innerText = t.b2_t; document.getElementById('txt-b2-desc').innerText = t.b2_d;
+            document.getElementById('txt-b3-titulo').innerText = t.b3_t; document.getElementById('txt-b3-desc').innerText = t.b3_d;
+            document.getElementById('lbl-patrocinio').innerText = t.patr;
+            document.getElementById('btn-cont-patr').innerText = t.btn_patr;
+
+            // Validación
+            document.getElementById('lbl-tit-val').innerText = t.tit_val;
+            document.getElementById('lbl-sub-val').innerText = t.sub_val;
+            document.getElementById('btn-consultar-val').innerText = t.btn_val;
+
+            // Contacto
+            document.getElementById('lbl-tit-contacto').innerText = t.tit_cont;
+            document.getElementById('lbl-sede-oficial').innerText = t.sede;
+
+            console.log("Idioma cambiado a: " + lang);
         }
     </script>
 </body>
